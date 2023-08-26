@@ -1,18 +1,27 @@
-const express = require('express')
+const express = require("express");
 const {
-	listarCarros,
-	detalharCarro,
-	cadastrarCarro,
-	atualizarCarro,
-	excluirCarro,
-} = require('./controladores/carros')
+  listarCarros,
+  detalharCarro,
+  cadastrarCarro,
+  atualizarCarro,
+  excluirCarro,
+} = require("./controladores/carros");
+const { cadastrarUsuario, login, obterPerfil } = require("./controladores/usuarios");
+const verificarUsuarioLogado = require("./intermediarios/autenticacao");
 
-const rotas = express()
+const rotas = express();
 
-rotas.get('/carro', listarCarros)
-rotas.get('/carro/:id', detalharCarro)
-rotas.post('/carro', cadastrarCarro)
-rotas.put('/carro/:id', atualizarCarro)
-rotas.delete('/carro/:id', excluirCarro)
+rotas.post("/usuario", cadastrarUsuario);
+rotas.post("/login", login);
 
-module.exports = rotas
+rotas.use(verificarUsuarioLogado);
+
+rotas.get('/perfil', obterPerfil)
+
+rotas.get("/carro", listarCarros);
+rotas.get("/carro/:id", detalharCarro);
+rotas.post("/carro", cadastrarCarro);
+rotas.put("/carro/:id", atualizarCarro);
+rotas.delete("/carro/:id", excluirCarro);
+
+module.exports = rotas;

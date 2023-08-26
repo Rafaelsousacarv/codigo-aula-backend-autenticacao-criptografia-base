@@ -1,3 +1,5 @@
+create database aula_autenticacao_criptografia;
+
 create table carros (
     id serial primary key,
     modelo text not null,
